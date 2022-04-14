@@ -2,7 +2,7 @@ import socket
 
 
 
-target_host = "www.google.com" #localhost - hostname
+target_host = "localhost" #localhost - hostname
 target_port = 80
 
 
