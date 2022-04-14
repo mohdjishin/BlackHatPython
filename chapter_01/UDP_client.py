@@ -21,3 +21,6 @@ data, address = client.recvfrom(4096)
 
 
 print(data)
+
+
+client.close()
