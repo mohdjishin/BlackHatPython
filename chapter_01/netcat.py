@@ -112,7 +112,7 @@ class NetCat:
 #----------------------------------------------
 if __name__ == '__main__':
     parser =  argparse.ArgumentParser(
-        description="NetCat  Build by Muhammed Jishin Jamal T.C.P .. Ref Black Hat Python",
+        description="NetCat  Build by Muhammed Jishin Jamal T.C.P .. Ref Black Hat Python \n Github : github.com/mohdjishin",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent('''Example:  netcat.py -t 192.168.1.108 -p 5555 -l -c # command shell
         netcat.py -t 192.168.1.108 -p 5555 -l -u=mytest.txt # upload to file
