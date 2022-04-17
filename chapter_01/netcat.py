@@ -8,6 +8,7 @@ import textwrap
 import threading
 
 
+
 def execute(cmd):
     cmd = cmd.strip()
     if not cmd:
@@ -33,6 +34,7 @@ class NetCat:
             
         
     def send(self):
+        #sending data to target ip and port continuously unitl user ends ctrl + c
         self.socket.connect((self.args.target, self.args.port))
         if self.buffer:
             self.socket.send(self.buffer)
@@ -57,18 +59,25 @@ class NetCat:
             sys.exit()
             
     def listen(self):
+        #
         self.socket.bind((self.args.target, self.args.port))
         self.socket.listen(5)
+        # listening upto 5  ^ connection at a time 
         while True:
+            # listening continuously upto 5 simultaneously 
             client_socket, _ = self.socket.accept()
             client_thread = threading.Thread(
                 target=self.handle, args=(client_socket,))
             client_thread.start()
 #--------------------------------------------
     def handle(self, client_socket):
+        # if user pass execute flag -e --execute this will work
         if self.args.execute:
             output = execute(self.args.execute)
+            # the execute function will call and return data and save in output
             client_socket.send(output.encode())
+            
+            # if user pass flag -u --upload this will work 
         elif self.args.upload:
             file_buffer = b''
             while True:
@@ -82,6 +91,8 @@ class NetCat:
                 f.write(file_buffer)
             message = f'Saved file {self.args.upload}'
             client_socket.send(message.encode())
+            
+            # if user pass flag -c --command command  
         elif self.args.command:
             cmd_buffer = b''
             while True:
@@ -118,5 +129,12 @@ if __name__ == '__main__':
     parser.add_argument('-u', '--upload', help='upload file')
     args = parser.parse_args()
     
+    
+    if args.listen:
+        buffer= ""
+    else:
+        buffer = sys.stdin.read()
+    nc = NetCat(args,buffer.encode())
+    nc.run()    
     
     
