@@ -3,10 +3,10 @@ from sys import stderr, stdout
 import paramiko
 
 
-def ssh_command(ip, port, user, passwd, cmd):
+def ssh_command(ip, port, user, password, cmd):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(ip,port=port,username=user,password=passwd)
+    client.connect(ip,port=port,username=user,password=password)
     
     
     _, stdout, stderr = client.exec_command(cmd)
@@ -14,17 +14,26 @@ def ssh_command(ip, port, user, passwd, cmd):
     
     if output:
         print("----OUTPUT---")
+        
+        #print(output)
+        
         for line in output:
             print(line.strip())
-            
-            
-if __name__ == "__main__":
+
+
+def main():
     import getpass
     user =input("Username :")
-    password = getpass.getpass()
+    #user = getpass.getuser() - to get user name from host username
+    password = getpass.getpass() # password won't be visible while typing
     
     
     ip = input("Enter server ip : ")
     port = input("Port No : ") or 22
-    cmd = input("Enter Command or <CR> : ") or 'id'
+    cmd = input("Enter Command  : ") or 'id'
     ssh_command(ip, port, user, password, cmd)
+    
+            
+            
+if __name__ == "__main__":
+    main()
