@@ -8,6 +8,8 @@ from optparse import OptionParser
 
 # might face some issue
 # will be fixxing soon..
+
+# use this https://github.com/paramiko/paramiko/blob/main/demos/forward.py
     
 
 def main():
